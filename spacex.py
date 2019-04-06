@@ -3,8 +3,7 @@ import pandas as pd
 class Rocket():
     def __init__(self, spacecraft, nation, payload_mass, payload_volume, mass, base_cost, fuel_to_weight):
         """
-        Initialize a Room
-        give it an id, name, description, directions, with associated connections, visits and conditions
+        Initialize a Rocket
         """
         self.spacecraft = spacecraft
         self.nation = nation
@@ -20,15 +19,14 @@ class Rocket():
 class Item():
     def __init__(self, spacecraft, nation, payload_mass, payload_volume, mass, base_cost, fuel_to_weight):
         """
-        Initialize a Room
-        give it an id, name, description, directions, with associated connections, visits and conditions
+        Initialize an Item
         """
         self.parcel_ID = parcel_ID
         self.mass = mass
         self.volume = volume
 
     def __str__(self):
-        return self.spacecraft + " " + str(self.mass)
+        return self.mass
 
 def ReadRockets(INPUT_CSV):
     rockets = []
@@ -38,8 +36,6 @@ def ReadRockets(INPUT_CSV):
         rockets.append(rocket)
     return rockets
 
-"parcel_ID","mass (kg)","volume (m^3)"
-
 def ReadCargo(INPUT_CSV):
     cargolist = []
     df = pd.read_csv(INPUT_CSV)
@@ -48,9 +44,10 @@ def ReadCargo(INPUT_CSV):
         cargolist.append(item)
     return cargolist
 
-
-
 if __name__ == "__main__":
     rockets = ReadRockets('rockets.csv')
     for rocket in rockets:
         print(rocket)
+    cargo = ReadCargo('CargoList1.csv')
+    for item in cargo:
+        print(item)
