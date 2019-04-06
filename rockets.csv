@@ -1,0 +1,5 @@
+Spacecraft,Nation,Payload Mass (kgs),Payload Volume (m3),Mass (kgs),Base Cost($),Fuel-to-Weight
+Cygnus,USA,2000,18.9,7400,390,0.73
+Progress,Russia,2400,7.6,7020,175,0.74
+Kounotori,Japan,5200,14,10500,420,0.71
+Dragon,USA,6000,10,12200,347,0.72
