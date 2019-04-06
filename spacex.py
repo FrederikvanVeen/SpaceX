@@ -31,7 +31,7 @@ class Item():
         self.density =density
 
     def __str__(self):
-        return str(self.density)
+        return self.parcel_ID
 
 
 def ReadRockets(INPUT_CSV):
@@ -53,13 +53,16 @@ def ReadCargo(INPUT_CSV):
 
 
 def fill_cargo(rockets, cargolist):
+    filled_items =[]
     for item in cargolist:
         for rocket in rockets:
             rocket_density_upper = (rocket.average_density + rocket.average_density*0.7)
             rocket_density_lower = (rocket.average_density - rocket.average_density*0.7)
             if(item.density <= rocket_density_upper and item.density >= rocket_density_lower) and (rocket.filled_weight + item.mass <= rocket.payload_mass) and (rocket.filled_volume + item.volume <= rocket.payload_volume):
                 load_item_in_rocket(item, rocket)
-                # cargolist.remove(item)
+                filled_items.append(item)
+    return filled_items
+
 
 def load_item_in_rocket(item, rocket):
     rocket.items.append(item)
@@ -71,8 +74,15 @@ def load_item_in_rocket(item, rocket):
 if __name__ == "__main__":
     rockets = ReadRockets('rockets.csv')
     cargolist = ReadCargo('CargoLists/CargoList1.csv')
-    fill_cargo(rockets, cargolist)
+    filled_items = fill_cargo(rockets, cargolist)
+
     cargofilled = 0
     for rocket in rockets:
         cargofilled += len(rocket.items)
     print(cargofilled)
+    
+    # cargo_unfilled = []
+    # for item in cargolist:
+    #     if item not in filled_items:
+    #         cargo_unfilled.append(item)
+    # print(len(cargo_unfilled))
