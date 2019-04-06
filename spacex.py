@@ -1,7 +1,7 @@
 import pandas as pd
 
 class Rocket():
-    def __init__(self, spacecraft, nation, payload_mass, payload_volume, mass, base_cost, fuel_to_weight):
+    def __init__(self, spacecraft, nation, payload_mass, payload_volume, mass, base_cost, fuel_to_weight, average_desnity):
         """
         Initialize a Rocket
         """
@@ -12,27 +12,29 @@ class Rocket():
         self.mass = mass
         self.base_cost = base_cost
         self.fuel_to_weight = fuel_to_weight
+        self.average_density = average_density
 
     def __str__(self):
         return self.spacecraft + " " + str(self.mass)
 
 class Item():
-    def __init__(self, spacecraft, nation, payload_mass, payload_volume, mass, base_cost, fuel_to_weight):
+    def __init__(self, parcel_ID, mass, volume, density):
         """
         Initialize an Item
         """
         self.parcel_ID = parcel_ID
         self.mass = mass
         self.volume = volume
+        self.denisty =density
 
     def __str__(self):
-        return self.mass
+        return str(self.denisty)
 
 def ReadRockets(INPUT_CSV):
     rockets = []
     df = pd.read_csv(INPUT_CSV)
     for index, row in df.iterrows():
-        rocket = Rocket(row["Spacecraft"], row["Nation"], row['Payload Mass (kgs)'], row['Payload Volume (m3)'],row['Mass (kgs)'], row['Base Cost($)'], row['Fuel-to-Weight'])
+        rocket = Rocket(row["Spacecraft"], row["Nation"], row['Payload Mass (kgs)'], row['Payload Volume (m3)'],row['Mass (kgs)'], row['Base Cost($)'], row['Fuel-to-Weight'], row['Payload Mass (kgs)']/row['Payload Volume (m3)'])
         rockets.append(rocket)
     return rockets
 
@@ -40,7 +42,7 @@ def ReadCargo(INPUT_CSV):
     cargolist = []
     df = pd.read_csv(INPUT_CSV)
     for index, row in df.iterrows():
-        item = Item(row['parcel_ID'], row['mass (kg)'], row['volume (m^3)'])
+        item = Item(row['parcel_ID'], row['mass (kg)'], row['volume (m^3)'], row['mass (kg)']/row['volume (m^3)'])
         cargolist.append(item)
     return cargolist
 
@@ -48,6 +50,6 @@ if __name__ == "__main__":
     rockets = ReadRockets('rockets.csv')
     for rocket in rockets:
         print(rocket)
-    cargo = ReadCargo('CargoList1.csv')
+    cargo = ReadCargo('CargoLists/CargoList1.csv')
     for item in cargo:
         print(item)
