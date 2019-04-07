@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 
 class Rocket():
@@ -54,14 +55,25 @@ def ReadCargo(INPUT_CSV):
 
 def fill_cargo(rockets, cargolist):
     filled_items =[]
+    for i in range(3):
+        for i in np.arange(0, 1, 0.1):
+            for item in cargolist:
+                for rocket in rockets:
+                    rocket_density_upper = (rocket.average_density + rocket.average_density*i)
+                    rocket_density_lower = (rocket.average_density - rocket.average_density*i)
+                    if(item.density <= rocket_density_upper and item.density >= rocket_density_lower) and (rocket.filled_weight + item.mass <= rocket.payload_mass) and (rocket.filled_volume + item.volume <= rocket.payload_volume) and (item not in filled_items):
+                        load_item_in_rocket(item, rocket)
+                        filled_items.append(item)
+    return filled_items
+
+def fitlastitems(rockets, cargolist):
     for item in cargolist:
         for rocket in rockets:
-            rocket_density_upper = (rocket.average_density + rocket.average_density*0.7)
-            rocket_density_lower = (rocket.average_density - rocket.average_density*0.7)
-            if(item.density <= rocket_density_upper and item.density >= rocket_density_lower) and (rocket.filled_weight + item.mass <= rocket.payload_mass) and (rocket.filled_volume + item.volume <= rocket.payload_volume):
+            if (rocket.filled_weight + item.mass <= rocket.payload_mass) and (rocket.filled_volume + item.volume <= rocket.payload_volume) and (item not in filled_items):
                 load_item_in_rocket(item, rocket)
                 filled_items.append(item)
-    return filled_items
+
+
 
 
 def load_item_in_rocket(item, rocket):
@@ -80,9 +92,20 @@ if __name__ == "__main__":
     for rocket in rockets:
         cargofilled += len(rocket.items)
     print(cargofilled)
-    
-    # cargo_unfilled = []
-    # for item in cargolist:
-    #     if item not in filled_items:
-    #         cargo_unfilled.append(item)
-    # print(len(cargo_unfilled))
+
+    cargo_unfilled = []
+    for item in cargolist:
+        if item not in filled_items:
+            cargo_unfilled.append(item)
+    print(len(cargo_unfilled))
+
+    # for rocket in rockets:
+    #     print(rocket.payload_mass - rocket.filled_weight)
+    #     print(rocket.payload_volume - rocket.filled_volume)
+
+    fitlastitems(rockets, cargo_unfilled)
+
+    cargofilled = 0
+    for rocket in rockets:
+        cargofilled += len(rocket.items)
+    print(cargofilled)
