@@ -66,6 +66,7 @@ def fill_cargo(rockets, cargolist):
                     rocket_density_lower = (rocket.average_density - rocket.average_density*i)
                     if(item.density <= rocket_density_upper and item.density >= rocket_density_lower) and (rocket.filled_weight + item.mass <= rocket.payload_mass) and (rocket.filled_volume + item.volume <= rocket.payload_volume) and (item not in cargo_in_rockets):
                         load_item_in_rocket(item, rocket)
+                        filled += 1
                         cargo_in_rockets.append(item)
 
     if filled > 0:
@@ -89,6 +90,8 @@ def switchitems_rockets(rockets):
     # cross check between all rockets
     for rocket_i in rockets:
         for rocket_j in rockets:
+
+            # only for different rockets
             if (rocket_i != rocket_j):
 
                 # cross check for all items in seperate rockets
@@ -96,16 +99,23 @@ def switchitems_rockets(rockets):
                     for item_j in rocket_j.items:
 
                         # if items can switch, do so, and check if item from unfilled list fits in as result
-                        if (rocket_j.filled_weight - item_j.mass + item_i.mass <= rocket_j.payload_mass) and (rocket_j.filled_volume - item_j.volume + item_i.volume <= rocket_j.payload_volume) and (rocket_i.filled_weight + item_j.mass - item_i.mass <= rocket_i.payload_mass) and (rocket_i.filled_volume + item_j.volume - item_i.volume <= rocket_i.payload_volume):
+                        if (rocket_j.filled_weight - item_j.mass + item_i.mass <= rocket_j.payload_mass) and (rocket_j.filled_volume - item_j.volume + item_i.volume <= rocket_j.payload_volume) and (rocket_i.filled_weight + item_j.mass - item_i.mass <= rocket_i.payload_mass) and (rocket_i.filled_volume + item_j.volume - item_i.volume <= rocket_i.payload_volume) and (item_i != item_j):
                             interchange_items_between_rockets(rocket_i, rocket_j, item_i, item_j)
-                            filled = fill_cargo(rockets, cargo_unfilled)
 
-                            if not filled:
-                                # switch items back
-                                interchange_items_between_rockets(rocket_i, rocket_j, item_j, item_i)
+                            filled = fill_cargo(rockets, cargo_unfilled)
+                            #
+                            if filled:
+                                print('yaa')
+                                break
+                            #
+                            # if not filled:
+                            #     interchange_items_between_rockets(rocket_i, rocket_j, item_j, item_i)
 
 
 def interchange_items_between_rockets(rocket_i, rocket_j, item_i, item_j):
+    item_i_temp = item_i
+    item_j_temp = item_j
+
     # update filled weight and volume
     rocket_i.filled_weight = rocket_i.filled_weight + item_j.mass - item_i.mass
     rocket_i.filled_volume = rocket_i.filled_volume + item_j.volume - item_i.volume
@@ -114,68 +124,78 @@ def interchange_items_between_rockets(rocket_i, rocket_j, item_i, item_j):
     rocket_j.filled_volume = rocket_j.filled_volume + item_i.volume - item_j.volume
 
 
-    for n in range(len(rocket_i.items)):
-        if rocket_i.items[n] == item_i:
-            rocket_i.items[n] = item_j
+    for item in rocket_i.items:
+        if item == item_i:
+            item = item_j_temp
 
-    for n in range(len(rocket_j.items)):
-        if rocket_j.items[n] == item_j:
-            rocket_j.items[n] = item_i
+    for item in rocket_j.items:
+        if item == item_j:
+            item = item_i_temp
 
-    # # update rocket_i
-    # for item in rocket_i.items:
-    #     if (item == item_i):
-    #         # update item
-    #         item = item_j
+
+
+    # for n in range(len(rocket_i.items)):
+    #     if rocket_i.items[n] == item_i:
+    #         item_temp_temp1 = rocket_i.items[n]
+    #         rocket_i.items[n] = item_j_temp
     #
-    # # same for rocket_j
-    # for item in rocket_j.items:
-    #     if (item == item_j):
-    #         item = item_i
+    # for m in range(len(rocket_j.items)):
+    #     if rocket_j.items[m] == item_j:
+    #         rocket_j.items[m] = item_temp_temp1
+    #
+    #
 
 
-def switchitems_rocket_and_unfilled(rockets, cargo_unfilled):
+
+
+#
+# def switchitems_rocket_and_unfilled(rockets, cargo_unfilled):
+#
+#     for rocket in rockets:
+#         for item_rocket in rocket.items:
+#             for item_list in cargo_unfilled:
+#
+#                 # check is item in rocket can be swapped with item from cargo_unfilled
+#                 if (rocket.filled_weight - item_rocket.mass + item_list.mass <= rocket.payload_mass) and (rocket.filled_volume - item_rocket.volume + item_list.volume <= rocket.payload_volume):
+#                     interchange_items_between_rocket_and_list(rocket, cargo_unfilled, item_rocket, item_list)
+#                     filled = fill_cargo(rockets, cargo_unfilled)
+#                     # if not filled:
+#                         # interchange_items_between_rocket_and_list(rocket, cargo_unfilled, item_list, item_rocket)
+#
+#
+# def interchange_items_between_rocket_and_list(rocket, cargo_unfilled, item_rocket, item_list):
+#     # update filled weight and volume
+#
+#     rocket.filled_weight = rocket.filled_weight + item_list.mass - item_rocket.mass
+#     rocket.filled_volume = rocket.filled_volume + item_list.volume - item_rocket.volume
+#
+#     # update rocket
+#     for n in range(len(rocket.items)):
+#         if (rocket.items[n] == item_rocket):
+#             rocket.items[n] = item_list
+#
+#
+#     for n in range(len(cargo_in_rockets)):
+#         if cargo_in_rockets[n] == item_rocket:
+#             cargo_in_rockets[n] = item_list
+#
+#     for n in range(len(cargo_unfilled)):
+#         if cargo_unfilled[n] == item_list:
+#             cargo_unfilled[n] = item_rocket
+#
+
+def check_items_rocket_cargo(rockets, cargolist):
+    yes = 0
+    no = 0
 
     for rocket in rockets:
-        for item_rocket in rocket.items:
-            for item_list in cargo_unfilled:
-
-                # check is item in rocket can be swapped with item from cargo_unfilled
-                if (rocket.filled_weight - item_rocket.mass + item_list.mass <= rocket.payload_mass) and (rocket.filled_volume - item_rocket.volume + item_list.volume <= rocket.payload_volume):
-                    interchange_items_between_rocket_and_list(rocket, cargo_unfilled, item_rocket, item_list)
-                    fill_cargo(rockets, cargo_unfilled)
-
-
-def interchange_items_between_rocket_and_list(rocket, cargo_unfilled, item_rocket, item_list):
-    # update filled weight and volume
-    rocket.filled_weight = rocket.filled_weight + item_list.mass - item_rocket.mass
-    rocket.filled_volume = rocket.filled_volume + item_list.volume - item_rocket.volume
-
-    print(item_rocket)
-
-    for item in cargo_in_rockets:
-        print(item)
-
-    item_list_sub = item_list
-    item_rocket_sub = item_rocket
-
-    cargo_in_rockets.remove(item_rocket)
-    cargo_in_rockets.append(item_list)
-
-    cargo_unfilled.remove(item_list)
-    cargo_unfilled.append(item_rocket)
-
-
-
-    # update rocket
-    for item in rocket.items:
-        if (item == item_rocket_sub):
-            item = item_list_sub
-            # # update item
-            # item.parcel_ID = item_list_sub.parcel_ID
-            # item.mass = item_list_sub.mass
-            # item.volume = item_list_sub.volume
-
+        for item in rocket.items:
+            if item in cargolist:
+                yes += 1
+            else:
+                no += 1
+    print(yes)
+    print(no)
 
 def load_item_in_rocket(item, rocket):
     rocket.items.append(item)
@@ -210,11 +230,19 @@ def check_if_correct(rockets):
         print(total_filled_volume)
         print(total_volume_items)
 
-def total_cost(rockets):
+def summary(rockets):
+
+    for rocket in rockets:
+        for item in rocket.items:
+            print(item)
+        print(rocket.payload_mass - rocket.filled_weight)
+        print(rocket.payload_volume - rocket.filled_volume)
+
     total_cost = 0
     for rocket in rockets:
         Fuel_grams = (rocket.mass + rocket.filled_weight)*(rocket.fuel_to_weight)/(1 - rocket.fuel_to_weight)
         cost_rocket = (rocket.base_cost * (10**6)) + round(1000 * Fuel_grams)
+        print(cost_rocket)
         total_cost += cost_rocket
     return total_cost
 
@@ -228,13 +256,37 @@ if __name__ == "__main__":
 
         shuffle(cargolist)
         fill_cargo(rockets, cargolist)
-        cargo_unfilled = []
-        for item in cargolist:
-            if item not in cargo_in_rockets:
-                cargo_unfilled.append(item)
-        switchitems_rockets(rockets)
-        check_if_correct(rockets)
         print(len(set(cargo_in_rockets)))
+
+        # cargo_unfilled = []
+        # for item in cargolist:
+        #     if item not in cargo_in_rockets:
+        #         cargo_unfilled.append(item)
+        #
+        # switchitems_rockets(rockets)
+        # # print(len(set(cargo_in_rockets)))
+        # print(len(set(cargo_in_rockets)))
+        # check_if_correct(rockets)
+        #
+        # check_items_rocket_cargo(rockets, cargolist)
+
+        # cargo_unfilled = []
+        # for item in cargolist:
+        #     if item not in cargo_in_rockets:
+        #         cargo_unfilled.append(item)
+
+        # switchitems_rocket_and_unfilled(rockets, cargo_unfilled)
+        #
+        # check_if_correct(rockets)
+        # print(len(set(cargo_in_rockets)))
+
+    # for rocket in rockets:
+    #     for item in rocket.items:
+    #         print(item)
+    #     print(rocket.payload_mass - rocket.filled_weight)
+    #     print(rocket.payload_volume - rocket.filled_volume)
+
+    summary(rockets)
 
     # cargo_unfilled = []
     # for item in cargolist:
