@@ -1,5 +1,5 @@
 class Rocket():
-    def __init__(self, spacecraft, nation, payload_mass, payload_volume, mass, base_cost, fuel_to_weight, average_density, items, filled_weight, filled_volume, id):
+    def __init__(self, spacecraft, nation, payload_mass, payload_volume, mass, base_cost, fuel_to_weight, initial_average_density, average_density, items, filled_weight, filled_volume, id):
         """
         Initialize a Rocket
         """
@@ -10,6 +10,7 @@ class Rocket():
         self.mass = mass
         self.base_cost = base_cost
         self.fuel_to_weight = fuel_to_weight
+        self.initial_average_density = initial_average_density
         self.average_density = average_density
         self.items = items
         self.filled_weight = filled_weight
@@ -24,6 +25,11 @@ class Rocket():
             self.average_density = (self.payload_mass - self.filled_weight)/(self.payload_volume - self.filled_volume)
         else:
             self.average_density = 0
+
+    def load_item_error(self, item):
+        self.items.append(item)
+        self.filled_weight += item.mass
+        self.filled_volume += item.volume
 
     def interchange_items(self, item_i, item_j):
         self.filled_weight = self.filled_weight + item_j.mass - item_i.mass
