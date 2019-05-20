@@ -6,7 +6,7 @@ from rocket import Rocket
 from item import Item
 import algorithms as al
 import copy
-
+from matplotlib import pyplot as plt
 cargo_in_rockets =[]
 
 class Solution():
@@ -42,7 +42,7 @@ class Solution():
         return cargolist
 
 
-    def Items_count(self):
+    def count_items(self):
         self.items_count = len(self.cargo_in_rockets)
         print(self.items_count)
 
@@ -86,30 +86,104 @@ class Solution():
 
 
 if __name__ == "__main__":
+    results_sim_an_hill_climber_spacex = [0 for i in range(100)]
+    results_sim_an_solo_spacex = [0 for i in range(100)]
+    results_random_fill = [0 for i in range(100)]
+    results_random_fill_hill_climber = [0 for i in range(100)]
+    runs = 0
+    while(runs < 15):
+        solution_sim_an_hill_climber_spacex = Solution()
+        random.shuffle(solution_sim_an_hill_climber_spacex.cargolist)
+        # solution_sim_an_solo_spacex = copy.deepcopy(solution_sim_an_hill_climber_spacex)
+        # solution_random_fill = copy.deepcopy(solution_sim_an_hill_climber_spacex)
+        # solution_random_fill_hill_climber = copy.deepcopy(solution_sim_an_hill_climber_spacex)
+
+        al.sim_an_hill_climber_spacex(solution_sim_an_hill_climber_spacex)
+        # al.sim_an_solo_spacex(solution_sim_an_solo_spacex)
+        # al.random_fill(solution_random_fill)
+        # al.random_fill_hill_climber(solution_random_fill_hill_climber)
+        solution_sim_an_hill_climber_spacex.count_items()
+        # solution_sim_an_solo_spacex.count_items()
+        # solution_random_fill.count_items()
+        # solution_random_fill_hill_climber.count_items()
+        results_sim_an_hill_climber_spacex[solution_sim_an_hill_climber_spacex.items_count] += 1
+        # results_sim_an_solo_spacex[solution_sim_an_solo_spacex.items_count] += 1
+        # results_random_fill[solution_random_fill.items_count] += 1
+        # results_random_fill_hill_climber[solution_random_fill_hill_climber.items_count] +=1
 
 
-    # solution solved by sim_an_hill_climber
-    solution_1 = Solution()
-    random.shuffle(solution_1.cargolist)
-    al.sim_an_hill_climber_spacex(solution_1)
-    solution_1_copy = copy.deepcopy(solution_1)
-    solution_1.Items_count()
-    solution_1.cost_total()
-    cost_before = solution_1.cost
-    al.sim_an_cost(solution_1, 500, 30)
-    solution_1.cost_total()
-    cost_after = solution_1.cost
-    cost_dif = cost_after - cost_before
-    print(cost_dif)
+        runs += 1
+    # print(results_sim_an_hill_climber_spacex)
+    # print(results_sim_an_solo_spacex)
+    # print(results_random_fill)
+    # print(results_random_fill_hill_climber)
 
-    solution_1_copy.cost_total()
-    cost_before = solution_1_copy.cost
-    al.greedy_cost(solution_1_copy)
-    solution_1_copy.cost_total()
-    cost_after = solution_1_copy.cost
-    cost_dif = cost_after - cost_before
-    print(cost_dif)
-        
+
+    # data = np.random.normal(0, 20, 1000)
+
+    # fixed bin size
+
+    # plt.xlim([min(data)-5, max(data)+5])
+    # plt.hist(results_random_fill, bins=20)
+    # plt.axis([0, 4, 0, 100])
+
+    # plt.title('Random Gaussian data (fixed bin size)')
+    # plt.xlabel('variable X (bin size = 5)')
+    # plt.ylabel('count')
+
+    plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # # solution solved by sim_an_hill_climber
+    # solution_1 = Solution()
+    # random.shuffle(solution_1.cargolist)
+    # al.sim_an_hill_climber_spacex(solution_1)
+    # solution_1_copy = copy.deepcopy(solution_1)
+    # solution_1.Items_count()
+    # solution_1.cost_total()
+    # cost_before = solution_1.cost
+    # al.sim_an_cost(solution_1, 500, 30)
+    # solution_1.cost_total()
+    # cost_after = solution_1.cost
+    # cost_dif = cost_after - cost_before
+    # print(cost_dif)
+    #
+    #
+    # solution_1_copy.cost_total()
+    # cost_before = solution_1_copy.cost
+    # al.greedy_cost(solution_1_copy)
+    # solution_1_copy.cost_total()
+    # cost_after = solution_1_copy.cost
+    # cost_dif = cost_after - cost_before
+    # print(cost_dif)
+
 
 
         # # solution_4.check_if_correct()

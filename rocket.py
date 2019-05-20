@@ -17,6 +17,7 @@ class Rocket():
         self.filled_volume = filled_volume
         self.id = id
 
+
     def load_item(self, item):
         self.items.append(item)
         self.filled_weight += item.mass
@@ -26,10 +27,12 @@ class Rocket():
         else:
             self.average_density = 0
 
+
     def load_item_error(self, item):
         self.items.append(item)
         self.filled_weight += item.mass
         self.filled_volume += item.volume
+
 
     def interchange_items(self, item_i, item_j):
         self.filled_weight = self.filled_weight + item_j.mass - item_i.mass
@@ -39,6 +42,7 @@ class Rocket():
             if self.items[n] == item_i:
                 self.items[n] = item_j
 
+
     def remove_item(self, item):
         self.items.remove(item)
         self.filled_weight -= item.mass
@@ -47,6 +51,7 @@ class Rocket():
             self.average_density = (self.payload_mass - self.filled_weight)/(self.payload_volume - self.filled_volume)
         else:
             self.average_density = 0
+
 
     def __str__(self):
         return str(self.average_density)
