@@ -12,7 +12,6 @@ def cost_opitimization_greedy(rockets):
         # cross check between all rockets
         cost_reduction_max = 0
 
-
         for rocket_i in rockets:
             for rocket_j in rockets:
 
@@ -52,7 +51,7 @@ def cost_opitimization_greedy(rockets):
                                 rocket_j.interchange_items(item_i, item_j)
 
         # make the best switch possible
-        print(cost_reduction_max)
+        # print(cost_reduction_max)
         if cost_reduction_max > 0:
             rocket_item_1.interchange_items(item_to_change_1, item_to_change_2)
             rocket_item_2.interchange_items(item_to_change_2, item_to_change_1)
@@ -146,13 +145,13 @@ def cost_opitimization_probability_depended(rockets, T):
                             else:
 
                                 probability =  math.exp(-cost_difference/T)
-                                print('--------')
-                                print(probability)
-                                print(cost_difference)
+                                # print('--------')
+                                # print(probability)
+                                # print(cost_difference)
                                 # generate random number
                                 random_number = random.random()
-                                print(random_number)
-                                print("--------")
+                                # print(random_number)
+                                # print("--------")
                                 if (probability > random_number):
                                     break
 
@@ -222,12 +221,61 @@ def fill_cargo_density_with_error(rockets, cargolist, cargo_in_rockets):
                         rocket_density_lower = (rocket.average_density - rocket.average_density*i)
 
                     if density_difference > 0:
+                        # print('yes')
                         rocket_density_upper = (rocket.average_density + rocket.average_density*i + density_difference*i)
                         rocket_density_lower = (rocket.average_density - rocket.average_density*i + density_difference*i)
 
                     if density_difference < 0:
+                        # print('yes')
                         rocket_density_upper = (rocket.average_density + rocket.average_density*i - density_difference*i)
                         rocket_density_lower = (rocket.average_density - rocket.average_density*i - density_difference*i)
+
+                    # if items are within density range and fit the rocket, load in rocket
+                    if(item.density <= rocket_density_upper and item.density >= rocket_density_lower) and (rocket.filled_weight + item.mass <= rocket.payload_mass) and (rocket.filled_volume + item.volume <= rocket.payload_volume) and (item not in cargo_in_rockets):
+                        filled += 1
+                        rocket.load_item_error(item)
+                        cargo_in_rockets.append(item)
+                        items_loaded.append(item)
+
+            # remove items in cargolist if loaded
+            for item in items_loaded:
+                cargolist.remove(item)
+
+    # return amount of items filled in current session
+    return filled
+
+
+def fill_cargo_density_with_error_corrected(rockets, cargolist, cargo_in_rockets):
+
+    filled = 0
+    for i in range(3):
+        for rocket in rockets:
+            if (rocket.payload_volume - rocket.filled_volume != 0):
+                rocket.initial_average_density = (rocket.payload_mass - rocket.filled_weight)/(rocket.payload_volume - rocket.filled_volume)
+            else:
+                rocket.initial_average_density = 0
+
+        for i in np.arange(0, 2, 0.1):
+        # increase range for search iteratively
+            items_loaded = []
+            for item in cargolist:
+                for rocket in rockets:
+
+                    # calculate shift in density
+                    density_difference = rocket.average_density - rocket.initial_average_density
+
+                    # set upper and lower bound for range of densities
+                    if density_difference == 0:
+                        rocket_density_upper = (rocket.initial_average_density + rocket.initial_average_density*i)
+                        rocket_density_lower = (rocket.initial_average_density - rocket.initial_average_density*i)
+
+                    if density_difference > 0:
+                        rocket_density_upper = (rocket.initial_average_density + rocket.initial_average_density*i + density_difference*i)
+                        rocket_density_lower = (rocket.initial_average_density - rocket. initial_average_density*i + density_difference*i)
+
+                    if density_difference < 0:
+                        rocket_density_upper = (rocket.initial_average_density + rocket.initial_average_density*i - density_difference*i)
+                        rocket_density_lower = (rocket.initial_average_density - rocket. initial_average_density*i - density_difference*i)
 
                     # if items are within density range and fit the rocket, load in rocket
                     if(item.density <= rocket_density_upper and item.density >= rocket_density_lower) and (rocket.filled_weight + item.mass <= rocket.payload_mass) and (rocket.filled_volume + item.volume <= rocket.payload_volume) and (item not in cargo_in_rockets):
@@ -315,24 +363,35 @@ def fill_cargo_single_rocket_random(rocket, cargolist, cargo_in_rockets):
     return filled
 
 
-def fill_cargo_single_rocket_density_with_error(rocket):
+def fill_cargo_single_rocket_density_with_error(rocket, cargolist, cargo_in_rockets):
     filled = 0
 
     for i in range(3):
-        for rocket in rockets:
-            if (rocket.payload_volume - rocket.filled_volume != 0):
-                rocket.average_density = (rocket.payload_mass - rocket.filled_weight)/(rocket.payload_volume - rocket.filled_volume)
-            else:
-                rocket.average_density = 0
+
+        if (rocket.payload_volume - rocket.filled_volume != 0):
+            rocket.initial_average_density = (rocket.payload_mass - rocket.filled_weight)/(rocket.payload_volume - rocket.filled_volume)
+        else:
+            rocket.initial_average_density = 0
 
     # increase range for search iteratively
         for i in np.arange(0, 1.5, 0.1):
             items_loaded = []
             for item in cargolist:
 
+                density_difference = rocket.average_density - rocket.initial_average_density
+
                 # set upper and lower bound for range of densities
-                rocket_density_upper = (rocket.average_density + rocket.average_density*i)
-                rocket_density_lower = (rocket.average_density - rocket.average_density*i)
+                if density_difference == 0:
+                    rocket_density_upper = (rocket.initial_average_density + rocket.initial_average_density*i)
+                    rocket_density_lower = (rocket.initial_average_density - rocket.initial_average_density*i)
+
+                if density_difference > 0:
+                    rocket_density_upper = (rocket.initial_average_density + rocket.initial_average_density*i + density_difference*i)
+                    rocket_density_lower = (rocket.initial_average_density - rocket. initial_average_density*i + density_difference*i)
+
+                if density_difference < 0:
+                    rocket_density_upper = (rocket.initial_average_density + rocket.initial_average_density*i - density_difference*i)
+                    rocket_density_lower = (rocket.initial_average_density - rocket. initial_average_density*i - density_difference*i)
 
                 # if items are within density range and fit the rocket, load in rocket
                 if(item.density <= rocket_density_upper and item.density >= rocket_density_lower) and (rocket.filled_weight + item.mass <= rocket.payload_mass) and (rocket.filled_volume + item.volume <= rocket.payload_volume) and (item not in cargo_in_rockets):
