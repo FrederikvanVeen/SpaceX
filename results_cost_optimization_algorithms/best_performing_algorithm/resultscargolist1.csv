@@ -1,0 +1,511 @@
+test_no,best_performing_algorithm
+1,greedy
+2,greedy
+3,simulated annealing
+4,simulated annealing
+5,greedy
+6,simulated annealing
+7,simulated annealing
+8,greedy
+9,simulated annealing
+10,simulated annealing
+1,greedy
+2,greedy
+3,greedy
+4,simulated annealing
+5,simulated annealing
+6,simulated annealing
+7,simulated annealing
+8,simulated annealing
+9,simulated annealing
+10,simulated annealing
+11,simulated annealing
+12,simulated annealing
+13,greedy
+14,simulated annealing
+15,greedy
+16,greedy
+17,simulated annealing
+18,simulated annealing
+19,simulated annealing
+20,greedy
+21,greedy
+22,simulated annealing
+23,simulated annealing
+24,greedy
+25,simulated annealing
+26,simulated annealing
+27,simulated annealing
+28,greedy
+29,simulated annealing
+30,simulated annealing
+31,greedy
+32,simulated annealing
+33,greedy
+34,greedy
+35,greedy
+36,simulated annealing
+37,greedy
+38,greedy
+39,simulated annealing
+40,simulated annealing
+41,greedy
+42,simulated annealing
+43,greedy
+44,greedy
+45,greedy
+46,simulated annealing
+47,hill climber
+48,hill climber
+49,hill climber
+50,greedy
+51,greedy
+52,simulated annealing
+53,greedy
+54,greedy
+55,greedy
+56,simulated annealing
+57,simulated annealing
+58,simulated annealing
+59,greedy
+60,greedy
+61,simulated annealing
+62,greedy
+63,simulated annealing
+64,greedy
+65,greedy
+66,greedy
+67,simulated annealing
+68,simulated annealing
+69,simulated annealing
+70,simulated annealing
+71,simulated annealing
+72,simulated annealing
+73,greedy
+74,simulated annealing
+75,hill climber
+76,simulated annealing
+77,greedy
+78,simulated annealing
+79,hill climber
+80,simulated annealing
+81,simulated annealing
+82,greedy
+83,simulated annealing
+84,simulated annealing
+85,greedy
+86,simulated annealing
+87,greedy
+88,simulated annealing
+89,simulated annealing
+90,simulated annealing
+91,simulated annealing
+92,simulated annealing
+93,simulated annealing
+94,simulated annealing
+95,simulated annealing
+96,simulated annealing
+97,greedy
+98,greedy
+99,greedy
+100,greedy
+101,simulated annealing
+102,greedy
+103,simulated annealing
+104,greedy
+105,greedy
+106,greedy
+107,simulated annealing
+108,simulated annealing
+109,simulated annealing
+110,greedy
+111,simulated annealing
+112,simulated annealing
+113,greedy
+114,simulated annealing
+115,greedy
+116,greedy
+117,greedy
+118,simulated annealing
+119,greedy
+120,greedy
+121,simulated annealing
+122,greedy
+123,greedy
+124,greedy
+125,simulated annealing
+126,greedy
+127,greedy
+128,greedy
+129,simulated annealing
+130,greedy
+131,hill climber
+132,greedy
+133,simulated annealing
+134,hill climber
+135,greedy
+136,simulated annealing
+137,greedy
+138,simulated annealing
+139,greedy
+140,simulated annealing
+141,simulated annealing
+142,simulated annealing
+143,simulated annealing
+144,simulated annealing
+145,simulated annealing
+146,simulated annealing
+147,simulated annealing
+148,simulated annealing
+149,simulated annealing
+150,simulated annealing
+151,simulated annealing
+152,greedy
+153,simulated annealing
+154,greedy
+155,greedy
+156,hill climber
+157,simulated annealing
+158,simulated annealing
+159,simulated annealing
+160,greedy
+161,greedy
+162,simulated annealing
+163,simulated annealing
+164,simulated annealing
+165,greedy
+166,hill climber
+167,simulated annealing
+168,greedy
+169,hill climber
+170,simulated annealing
+171,simulated annealing
+172,simulated annealing
+173,greedy
+174,simulated annealing
+175,simulated annealing
+176,simulated annealing
+177,greedy
+178,simulated annealing
+179,hill climber
+180,simulated annealing
+181,hill climber
+182,simulated annealing
+183,simulated annealing
+184,greedy
+185,greedy
+186,simulated annealing
+187,simulated annealing
+188,simulated annealing
+189,greedy
+190,simulated annealing
+191,simulated annealing
+192,simulated annealing
+193,simulated annealing
+194,simulated annealing
+195,simulated annealing
+196,greedy
+197,greedy
+198,simulated annealing
+199,simulated annealing
+200,greedy
+201,greedy
+202,simulated annealing
+203,hill climber
+204,simulated annealing
+205,simulated annealing
+206,hill climber
+207,simulated annealing
+208,simulated annealing
+209,greedy
+210,greedy
+211,simulated annealing
+212,hill climber
+213,simulated annealing
+214,greedy
+215,simulated annealing
+216,greedy
+217,simulated annealing
+218,greedy
+219,simulated annealing
+220,greedy
+221,simulated annealing
+222,greedy
+223,simulated annealing
+224,greedy
+225,hill climber
+226,simulated annealing
+227,simulated annealing
+228,simulated annealing
+229,greedy
+230,greedy
+231,simulated annealing
+232,greedy
+233,greedy
+234,greedy
+235,greedy
+236,greedy
+237,greedy
+238,simulated annealing
+239,simulated annealing
+240,simulated annealing
+241,simulated annealing
+242,simulated annealing
+243,simulated annealing
+244,greedy
+245,greedy
+246,simulated annealing
+247,greedy
+248,greedy
+249,simulated annealing
+250,simulated annealing
+251,greedy
+252,greedy
+253,simulated annealing
+254,simulated annealing
+255,greedy
+256,greedy
+257,greedy
+258,greedy
+259,greedy
+260,simulated annealing
+261,simulated annealing
+262,simulated annealing
+263,simulated annealing
+264,hill climber
+265,simulated annealing
+266,simulated annealing
+267,simulated annealing
+268,hill climber
+269,greedy
+270,greedy
+271,simulated annealing
+272,hill climber
+273,simulated annealing
+274,greedy
+275,simulated annealing
+276,greedy
+277,simulated annealing
+278,simulated annealing
+279,simulated annealing
+280,greedy
+281,hill climber
+282,greedy
+283,simulated annealing
+284,simulated annealing
+285,greedy
+286,simulated annealing
+287,simulated annealing
+288,simulated annealing
+289,simulated annealing
+290,simulated annealing
+291,simulated annealing
+292,hill climber
+293,simulated annealing
+294,simulated annealing
+295,simulated annealing
+296,greedy
+297,greedy
+298,simulated annealing
+299,simulated annealing
+300,simulated annealing
+301,simulated annealing
+302,greedy
+303,simulated annealing
+304,simulated annealing
+305,simulated annealing
+306,simulated annealing
+307,simulated annealing
+308,simulated annealing
+309,greedy
+310,greedy
+311,greedy
+312,simulated annealing
+313,simulated annealing
+314,simulated annealing
+315,simulated annealing
+316,greedy
+317,simulated annealing
+318,greedy
+319,hill climber
+320,greedy
+321,simulated annealing
+322,simulated annealing
+323,simulated annealing
+324,simulated annealing
+325,greedy
+326,greedy
+327,hill climber
+328,simulated annealing
+329,simulated annealing
+330,simulated annealing
+331,simulated annealing
+332,simulated annealing
+333,hill climber
+334,simulated annealing
+335,simulated annealing
+336,simulated annealing
+337,simulated annealing
+338,simulated annealing
+339,greedy
+340,simulated annealing
+341,simulated annealing
+342,simulated annealing
+343,greedy
+344,simulated annealing
+345,simulated annealing
+346,greedy
+347,greedy
+348,greedy
+349,greedy
+350,simulated annealing
+351,simulated annealing
+352,simulated annealing
+353,simulated annealing
+354,greedy
+355,simulated annealing
+356,greedy
+357,greedy
+358,greedy
+359,hill climber
+360,simulated annealing
+361,greedy
+362,greedy
+363,simulated annealing
+364,simulated annealing
+365,simulated annealing
+366,simulated annealing
+367,greedy
+368,hill climber
+369,greedy
+370,simulated annealing
+371,greedy
+372,simulated annealing
+373,simulated annealing
+374,simulated annealing
+375,simulated annealing
+376,simulated annealing
+377,simulated annealing
+378,simulated annealing
+379,simulated annealing
+380,simulated annealing
+381,simulated annealing
+382,simulated annealing
+383,greedy
+384,simulated annealing
+385,hill climber
+386,greedy
+387,greedy
+388,simulated annealing
+389,simulated annealing
+390,greedy
+391,greedy
+392,greedy
+393,simulated annealing
+394,simulated annealing
+395,greedy
+396,simulated annealing
+397,simulated annealing
+398,simulated annealing
+399,simulated annealing
+400,greedy
+401,simulated annealing
+402,greedy
+403,greedy
+404,simulated annealing
+405,greedy
+406,greedy
+407,simulated annealing
+408,greedy
+409,greedy
+410,greedy
+411,simulated annealing
+412,hill climber
+413,simulated annealing
+414,simulated annealing
+415,greedy
+416,simulated annealing
+417,simulated annealing
+418,greedy
+419,simulated annealing
+420,greedy
+421,simulated annealing
+422,simulated annealing
+423,greedy
+424,simulated annealing
+425,greedy
+426,simulated annealing
+427,greedy
+428,greedy
+429,greedy
+430,simulated annealing
+431,greedy
+432,greedy
+433,simulated annealing
+434,greedy
+435,greedy
+436,greedy
+437,greedy
+438,greedy
+439,simulated annealing
+440,simulated annealing
+441,simulated annealing
+442,simulated annealing
+443,greedy
+444,greedy
+445,simulated annealing
+446,simulated annealing
+447,greedy
+448,greedy
+449,simulated annealing
+450,simulated annealing
+451,simulated annealing
+452,greedy
+453,hill climber
+454,simulated annealing
+455,simulated annealing
+456,simulated annealing
+457,greedy
+458,simulated annealing
+459,greedy
+460,simulated annealing
+461,simulated annealing
+462,greedy
+463,greedy
+464,simulated annealing
+465,greedy
+466,greedy
+467,greedy
+468,greedy
+469,hill climber
+470,greedy
+471,simulated annealing
+472,simulated annealing
+473,greedy
+474,greedy
+475,hill climber
+476,simulated annealing
+477,simulated annealing
+478,simulated annealing
+479,greedy
+480,simulated annealing
+481,greedy
+482,greedy
+483,simulated annealing
+484,simulated annealing
+485,simulated annealing
+486,simulated annealing
+487,simulated annealing
+488,simulated annealing
+489,greedy
+490,greedy
+491,greedy
+492,greedy
+493,simulated annealing
+494,simulated annealing
+495,simulated annealing
+496,greedy
+497,simulated annealing
+498,hill climber
+499,greedy
+500,simulated annealing
