@@ -1,13 +1,16 @@
 import helpers as hp
 
 
-# algorithms for filling
+# algorithm for filling by density with hill climber
 def density_based_hill_climber_error(solution):
     rockets = solution.rockets
     cargolist = solution.cargolist
     cargo_in_rockets = solution.cargo_in_rockets
 
+    # fill rockets based on density
     hp.fill_cargo_density_with_error(rockets, cargolist, cargo_in_rockets)
+
+    # switch items between rockets and remaining items in cargolist
     hp.switchitems_rockets_fill(rockets, cargolist, cargo_in_rockets, hp.fill_cargo_density_with_error)
 
     possibility = 1
@@ -17,12 +20,16 @@ def density_based_hill_climber_error(solution):
     solution.items_count = len(cargo_in_rockets)
 
 
+# algorithm for filling by density with hill climber without error correct
 def density_based_hill_climber(solution):
     rockets = solution.rockets
     cargolist = solution.cargolist
     cargo_in_rockets = solution.cargo_in_rockets
 
+    # fill rockets based on density with error
     hp.fill_cargo_density_with_error(rockets, cargolist, cargo_in_rockets)
+
+    # switch items between rockets and remaining items in cargolist
     hp.switchitems_rockets_fill(rockets, cargolist, cargo_in_rockets, hp.fill_cargo_density)
 
     possibility = 1
@@ -32,6 +39,7 @@ def density_based_hill_climber(solution):
     solution.items_count = len(cargo_in_rockets)
 
 
+# algorithm to fill rockets based on density
 def density_based(solution):
     rockets = solution.rockets
     cargolist = solution.cargolist
@@ -40,6 +48,7 @@ def density_based(solution):
     solution.items_count = len(cargo_in_rockets)
 
 
+# algorithm that fills rockets random
 def random_fill(solution):
     rockets = solution.rockets
     cargolist = solution.cargolist
@@ -48,6 +57,7 @@ def random_fill(solution):
     solution.items_count = len(cargo_in_rockets)
 
 
+# algorithm fills rockets random and switches parcel in order to create a more efficient configuration
 def random_fill_hill_climber(solution):
     rockets = solution.rockets
     cargolist = solution.cargolist
@@ -62,13 +72,7 @@ def random_fill_hill_climber(solution):
     solution.items_count = len(cargo_in_rockets)
 
 
-def packing_cargolist_3(solution):
-    cargolist = solution.cargolist
-    rockets = solution.rockets
-    cargo_in_rockets = solution.cargo_in_rockets
-
-
-#  algorithms for cost optimisation
+#  algorithm simulated annealing in order to optimize cost
 def sim_an_cost(solution, T_begin, iter_no):
     T = T_begin
     rockets = solution.rockets
@@ -77,6 +81,7 @@ def sim_an_cost(solution, T_begin, iter_no):
         T = hp.update_temperature(T)
 
 
+# hill climber for cost optimization
 def hill_climber_cost(solution):
     rockets = solution.rockets
     cost_before = hp.cost
@@ -84,6 +89,7 @@ def hill_climber_cost(solution):
     total_cost = hp.cost(rockets)
 
 
+# greedy for cost optimization
 def greedy_cost(solution):
     rockets = solution.rockets
     hp.cost_opitimization_greedy(rockets)

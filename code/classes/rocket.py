@@ -18,6 +18,7 @@ class Rocket():
         self.id = id
 
 
+    # load items in rocket by weight and mass, correct volume, mass and density of rocket
     def load_item(self, item):
         self.items.append(item)
         self.filled_weight += item.mass
@@ -28,12 +29,14 @@ class Rocket():
             self.average_density = 0
 
 
+    # load item with error
     def load_item_error(self, item):
         self.items.append(item)
         self.filled_weight += item.mass
         self.filled_volume += item.volume
 
 
+    # interchange items
     def interchange_items(self, item_i, item_j):
         self.filled_weight = self.filled_weight + item_j.mass - item_i.mass
         self.filled_volume = self.filled_volume + item_j.volume - item_i.volume
@@ -42,7 +45,7 @@ class Rocket():
             if self.items[n] == item_i:
                 self.items[n] = item_j
 
-
+    # remove items from rocket
     def remove_item(self, item):
         self.items.remove(item)
         self.filled_weight -= item.mass
