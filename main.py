@@ -7,52 +7,12 @@ from solution import Solution
 import algorithms as al
 import random
 import copy
-from matplotlib import pyplot as plt
+import matplotlib
+matplotlib.use('TkAgg')
+import matplotlib.pyplot as plt
 import time
 import csv
 from helpers import maxitems
-
-
-def barchart_packing(number_of_results, cargolist_number):
-    results_sim_an_hill_climber_spacex = [0 for i in range(100)]
-    results_sim_an_solo_spacex = [0 for i in range(100)]
-    results_random_fill = [0 for i in range(100)]
-    results_random_fill_hill_climber = [0 for i in range(100)]
-    for i in range(number_of_results):
-        # create a duplicate for the shuffled solution for each algorithm
-        solution_sim_an_hill_climber_spacex = Solution(cargolist_number)
-        random.shuffle(solution_sim_an_hill_climber_spacex.cargolist)
-        solution_sim_an_solo_spacex = copy.deepcopy(solution_sim_an_hill_climber_spacex)
-        solution_random_fill = copy.deepcopy(solution_sim_an_hill_climber_spacex)
-        solution_random_fill_hill_climber = copy.deepcopy(solution_sim_an_hill_climber_spacex)
-
-        # run all the algorithms on the same shuffled cargolist
-        al.sim_an_hill_climber_spacex(solution_sim_an_hill_climber_spacex)
-        al.sim_an_solo_spacex(solution_sim_an_solo_spacex)
-        al.random_fill(solution_random_fill)
-        al.random_fill_hill_climber(solution_random_fill_hill_climber)
-        results_sim_an_hill_climber_spacex[solution_sim_an_hill_climber_spacex.items_count] += 1
-        results_sim_an_solo_spacex[solution_sim_an_solo_spacex.items_count] += 1
-        results_random_fill[solution_random_fill.items_count] += 1
-        results_random_fill_hill_climber[solution_random_fill_hill_climber.items_count] +=1
-    print(results_sim_an_hill_climber_spacex)
-    print(results_random_fill)
-
-
-def barchart_cost_optimization(number_of_results, cargolist_number):
-    results_sim_an = []
-    results_greedy = []
-    results_hill_climber = []
-    cargolist_number = str(cargolist_number)
-    for i in range(number_of_results):
-        items_packed = 0
-        while(items_packed < 97):
-            solution = Solution(cargolist_number)
-            random.shuffle(solution.cargolist)
-            al.sim_an_hill_climber_spacex(solution)
-            items_packed = solution.items_count
-            print(solution.items_count)
-
 
 # calculates average running time for packing algorithms
 def average_running_time_for_packing(cargolist_number, algorithm, goal_items_packed):
@@ -67,7 +27,8 @@ def average_running_time_for_packing(cargolist_number, algorithm, goal_items_pac
                 items_packed = solution.items_count
         end = time.time()
         average_time = (end - start) / 10
-        print(average_time)
+
+        return(average_time)
 
 
 # function solves the packing problem for a cargolist and algorithm and then writes result in csv
@@ -170,7 +131,7 @@ def best_cost_optimization_algorithm(number_of_results, cargolist_number):
                 print(solution2.cost)
                 print(solution3.cost)
 
-                # determine beste performing algorithm
+                # determine best performing algorithm
                 if solution1.cost <= solution2.cost:
                     if solution1.cost < solution3.cost:
                         best  = 'simulated annealing'
@@ -192,29 +153,122 @@ def best_cost_optimization_algorithm(number_of_results, cargolist_number):
         # close csv
         csvFile.close()
 
-def packing_cargolist_3():
-    solution = Solution(3)
-    solution.rockets = solution.ReadRockets("data/rocketssix.csv")
+def run_programme():
+    # welcome the user
+    print("A warm welcome to the Space Freight's case from the group 'SpaceX'. You'll have to make a decision which algorithm you'ld like to run in order to fill the rockets with cargo.\n")
+    print("First of all, you'll have to decide which cargolist you'ld like to fill the rockets with.\n")
+    print("There are three cargolists: \n"
+    "Cargolist 1\n"
+    "Cargolist 2\n"
+    "Cargolist 3\n")
+    print("Please choose an option by typing either one of the following numbers: 1, 2 or 3\n")
+    option = input("Option: ")
+    number = 0
+    if option.isdigit():
+        if option == "1":
+            number = 1
+        elif option == "2":
+            number = 2
+        elif option == "3":
+            number = 3
+        else:
+            print("Invalid command (command must be either an 1, 2 or 3). Please try again.\n")
+    else:
+        print("Invalid command (command must be an integer). Please try again.\n")
+    print("Alright. Now you've decided which cargolist to send to space, it's time to decide which algorithm is going to devide the packages amongst the rockets.\n")
+    print("There are four options to choose from:\n"
+    "Option one is a random filler\n"
+    "Option two is a random filler combined with a hill climber\n"
+    "Option three is density based\n"
+    "Option four is density based combined with a hill climber\n")
+    # request for an algorithm
+    print("Please choose an option by typing either one of the following numbers: 1, 2, 3 or 4\n")
+    command = input("Option: ")
+    solution_chosen_option = []
+    if command.isdigit():
+        if command == "1":
+            solution1 = Solution(number)
+            al.random_fill(solution1)
+            print(f"The algorithm packed {solution1.items_count} items")
+            print(f"The average running time was {average_running_time_for_packing(number, al.random_fill, 75)} seconds")
+            solution_chosen_option.append(solution1)
+        elif command == "2":
+            solution2 = Solution(number)
+            al.random_fill_hill_climber(solution2)
+            print(f"The algorithm packed {solution2.items_count} items")
+            print(f"The average running time was {average_running_time_for_packing(number, al.random_fill_hill_climber, 93)} seconds")
+            solution_chosen_option.append(solution2)
+        elif command == "3":
+            solution3 = Solution(number)
+            al.density_based(solution3)
+            print(f"The algorithm packed {solution3.items_count} items")
+            print(f"The average running time was {average_running_time_for_packing(number, al.density_based, 93)} seconds")
+            solution_chosen_option.append(solution3)
+        elif command == "4":
+            solution4 = Solution(number)
+            al.density_based_hill_climber(solution4)
+            print(f"The algorithm packed {solution4.items_count} items")
+            print(f"The average running time was {average_running_time_for_packing(number, al.density_based_hill_climber, 97)} seconds")
+            # solution.append(al.density_based_hill_climber(solution4))
+            solution_chosen_option.append(solution4)
+            # results_packing = create_results_packing(command, solution4.items_count, number)
+        else:
+            print("Invalid command (command must be either an 1, 2, 3, or 4). Please try again.\n")
+    else:
+        print("Invalid command (command must be an integer). Please try again.\n")
 
+    for object in solution_chosen_option:
+        solution_first = object
+    solution_first.calculate_cost()
+    initial_costs = solution_first.cost
+    print(f"The total costs are {initial_costs} dollars")
 
- # For d) and e): use cargolist to fill all rockets, without removing items from cargolist, then check which rocket has best cost per item and choose that one
- # sort of greedy(density_based_hill_climber)
+    # inform user about the options
+    print("\nAlright. Now you've filled the rockets with cargo, let's run another algorithm in order to reduce the costs as much as possible.\n"
+    "Once again, there are several algorithms so you've got to make another decision:\n"
+    "Option one is simulated annealing\n"
+    "Option two is hill climber\n"
+    "Option three is greedy\n")
+    # make request for an algorithm
+    print("Please make a decision by typing either one of the following numbers: 1, 2 or 3\n")
+    # new object
+    sol_chosen = []
+    # run chosen algorithm
+    command = input("Option: ")
+    if command.isdigit():
+        if command == "1":
+            print("Please initialize a beginning temperature and the number of iterations by inserting only integers\n")
+            T_begin = int(input("Temperature: "))
+            iter_no = int(input("Iterations: "))
+            # iter_no = int(iter_no[10:len(iter_no)])
+            al.sim_an_cost(solution_first, T_begin, iter_no)
+        elif command == "2":
+            al.hill_climber_cost(solution_first)
+        elif command == "3":
+            al.greedy_cost(solution_first)
+        else:
+            print("Invalid command (command must be either an 1, 2 or 3). Please try again.\n")
+    else:
+        print("Invalid command (command must be an integer). Please try again.\n")
+
+    solution_first.calculate_cost()
+    final_costs = solution_first.cost
+    saved = initial_costs - final_costs
+    print(f"The total costs are now {final_costs} dollars.\n"
+    f"The algorithm reduced the costs with {saved} dollars!\n")
+
 
 if __name__ == "__main__":
-    solution = Solution(2)
-    maxitems(solution.cargolist, solution.rockets)
-    solution.cargolist.sort(key=lambda x: x.mass)
-    mass_90 = 0
-    volume_90 = 0
-    for i in range (90):
-        mass_90 += solution.cargolist[i].mass
-        volume_90 += solution.cargolist[i].volume
+    run_programme()
 
-    total_mass_rockets = 0
-    total_volume_rockets = 0
-    for rocket in solution.rockets:
-        total_mass_rockets += rocket.payload_mass
-        total_volume_rockets += rocket.payload_volume
+    # generate best algorithm to optimize costs
+    # best_cost_optimization_algorithm(100, 1)
 
-    print(mass_90/total_mass_rockets)
-    print(volume_90/total_volume_rockets)
+    # generate results for cost
+    # create_results_cost_optimization(100, 1, 97)
+
+    # generate results for packing algorithms
+    # create_results_packing(density_based_hill_climber, 100, 1)
+
+    # generate results for running time of packing algorithms
+    # average_running_time_for_packing(1, density_based_hill_climber, 97)
