@@ -75,7 +75,7 @@ class Solution():
             print(unused_volume)
 
 
-    def cost_total(self):
+    def calculate_cost(self):
         total_cost = 0
         base_cost_total = 0
         for rocket in self.rockets:
@@ -85,8 +85,7 @@ class Solution():
             cost_rocket = (rocket.base_cost * (10**6)) + round(1000 * Fuel_grams)
             total_cost += cost_rocket
         self.cost = total_cost
-        print(self.cost - base_cost_total* (10**6))
-#
+
 #
 # def barchart_packing(number_of_results):
 #     results_sim_an_hill_climber_spacex = [0 for i in range(100)]

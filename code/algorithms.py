@@ -61,6 +61,13 @@ def random_fill_hill_climber(solution):
 
     solution.items_count = len(cargo_in_rockets)
 
+
+def packing_cargolist_3(solution):
+    cargolist = solution.cargolist
+    rockets = solution.rockets
+    cargo_in_rockets = solution.cargo_in_rockets
+
+
 #  algorithms for cost optimisation
 def sim_an_cost(solution, T_begin, iter_no):
     T = T_begin
@@ -72,7 +79,9 @@ def sim_an_cost(solution, T_begin, iter_no):
 
 def hill_climber_cost(solution):
     rockets = solution.rockets
+    cost_before = hp.cost
     hp.cost_opitimization_hill_climber(rockets)
+    total_cost = hp.cost(rockets)
 
 
 def greedy_cost(solution):
